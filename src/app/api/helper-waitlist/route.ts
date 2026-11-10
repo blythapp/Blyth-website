@@ -20,7 +20,6 @@ function reply(status: number, body: Record<string, unknown>) {
   });
 }
 
-// Only the Blyth website itself may post here (not another site, not a form elsewhere).
 function isSameSite(req: NextRequest): boolean {
   const fetchSite = req.headers.get("sec-fetch-site");
   if (fetchSite && fetchSite !== "same-origin") return false;
@@ -64,7 +63,6 @@ export async function POST(req: NextRequest) {
     return reply(400, { error: "Check your name and email." });
   }
 
-  // Hidden field only bots fill in. Pretend it worked.
   if (typeof body.company === "string" && body.company.trim()) return reply(200, { ok: true });
 
   const name = cleanName(body.name);
@@ -91,12 +89,10 @@ export async function POST(req: NextRequest) {
     if (res.ok) return reply(200, { ok: true });
     if (res.status === 400) {
       const data = (await res.json().catch(() => null)) as { error?: unknown } | null;
-      // Only pass on short plain messages from our own backend.
       const msg = typeof data?.error === "string" && data.error.length <= 120 ? data.error : "Check your name and email.";
       return reply(400, { error: msg });
     }
     if (res.status === 429) return reply(429, { error: "Too many tries. Please wait a few minutes and try again." });
-    // 403 here means the website and backend INTERNAL_SHARE_API_KEY don't match.
     console.error(`[helper-waitlist] backend replied ${res.status} from ${API_BASE}/public/helper-waitlist`);
     return reply(502, { error: "Something went wrong. Please try again." });
   } catch (err) {

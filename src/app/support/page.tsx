@@ -43,7 +43,23 @@ export default function SupportPage() {
             <section className="policy-section">
               <h2>Contact us</h2>
               <p>
-                Need help or have a question? Email us at support[at]blythapp.com and we&rsquo;ll get back to you as soon as we can.
+                The fastest way to reach us is the support chat in the app: go to Profile &rarr; Help &amp; Support. If you can&rsquo;t
+                sign in, email us at support[at]blythapp.com and we&rsquo;ll reply within one business day.
+              </p>
+            </section>
+
+            <section className="policy-section">
+              <h2>Support hours</h2>
+              <p>Our team answers chats at these times (US Eastern time):</p>
+              <ul>
+                <li>Monday to Friday: 8 am to 8 pm</li>
+                <li>Saturday and Sunday: 10 am to 6 pm</li>
+              </ul>
+              <p>
+                You can message us any time. Outside these hours the app tells you when we&rsquo;re back, and we reply as soon as we are.
+              </p>
+              <p>
+                <strong>If you&rsquo;re in danger or need urgent help, call 911.</strong> Blyth isn&rsquo;t an emergency service.
               </p>
             </section>
 

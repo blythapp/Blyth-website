@@ -15,7 +15,6 @@ export interface PublishedLegalDocument {
 
 const API_BASE = process.env.API_BASE_URL ?? "http://localhost:4000/api";
 
-// How often the website checks the console for a newer version.
 const REFRESH_SECONDS = 60;
 
 export async function fetchLegalDocument(type: LegalDocumentType): Promise<LegalDocument | null> {
@@ -45,10 +44,6 @@ export async function fetchLegalDocument(type: LegalDocumentType): Promise<Legal
   }
 }
 
-// The version published from the admin console, but only if it is newer than
-// the copy built into the website (dated `builtInDate`, e.g. "Oct 28, 2026").
-// Otherwise null, and the page shows its built-in copy. This way an older
-// console draft can never replace a newer page.
 export async function fetchPublishedLegalDocument(
   type: LegalDocumentType,
   builtInDate: string,

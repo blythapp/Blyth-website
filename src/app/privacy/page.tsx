@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-// Date of the copy built into this page. Once a newer version is published
-// from the admin console (Legal Documents), that version is shown instead.
 const BUILT_IN_DATE = "Oct 28, 2026";
 
 function BuiltInCopy() {

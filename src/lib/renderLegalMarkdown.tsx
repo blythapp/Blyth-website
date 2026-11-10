@@ -1,10 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-// Turns the console's simple Markdown into page elements. Everything is
-// rendered as text through React (never as raw HTML), so a document can't
-// inject scripts or markup into the website.
-
 type Block = { kind: "h2" | "h3" | "p"; text: string } | { kind: "ul"; items: string[] };
 
 const MAX_BLOCKS = 5000;
@@ -45,7 +41,6 @@ function parseBlocks(body: string): Block[] {
       blocks.push({ kind: "ul", items });
       continue;
     }
-    // A paragraph always takes at least this line, so parsing can't stall.
     const paragraphLines: string[] = [line];
     i++;
     while (i < lines.length) {

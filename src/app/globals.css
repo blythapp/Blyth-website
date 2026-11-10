@@ -2622,7 +2622,6 @@ img {
   background: var(--accent-light);
 }
 
-/* Helper waitlist (only on the Coming soon page) */
 .wl-card {
   margin-top: 28px;
   width: 100%;
@@ -2688,8 +2687,6 @@ img {
   border-color: var(--accent);
 }
 
-/* Safari / iPhone autofill: keep the dark field and white text instead of
-   Safari's own colours, and make the contact/key icon light so it shows. */
 .wl-input {
   color-scheme: dark;
 }
@@ -2781,8 +2778,6 @@ img {
   .cs-pin { display: none; }
 }
 
-/* Between phone and wide screens the box fills most of the width, so keep the
-   lower dots out from behind it. */
 @media (min-width: 561px) and (max-width: 1100px) {
   .cs-pin:nth-child(3),
   .cs-pin:nth-child(4) { display: none; }

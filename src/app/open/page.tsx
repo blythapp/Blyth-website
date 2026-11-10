@@ -3,8 +3,6 @@ import PageReveal from "@/components/PageReveal";
 import { OpenInAppButtons } from "@/components/OpenInAppButtons";
 import { ANDROID_PACKAGE, STORE_URLS } from "@/lib/appLinks";
 
-// One link for emails: opens the Blyth app on whichever phone it's tapped on
-// (or that phone's store page if the app isn't installed).
 export const metadata: Metadata = {
   title: "Open Blyth",
   description: "Open the Blyth app.",
