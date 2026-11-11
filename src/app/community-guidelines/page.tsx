@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PolicyLayout from "@/components/PolicyLayout";
 import { fetchPublishedLegalDocument } from "@/lib/legalDocuments";
+import { BUILT_IN_LEGAL } from "@/lib/legalBuiltIn";
 import { renderLegalDocument } from "@/lib/renderLegalMarkdown";
 
 export const metadata: Metadata = {
@@ -11,109 +11,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/community-guidelines" },
 };
 
-const BUILT_IN_DATE = "Oct 9, 2026";
-
-function BuiltInCopy() {
-  return (
-    <PolicyLayout title="Community guidelines" updated={BUILT_IN_DATE}>
-      <section className="policy-section">
-        <p>
-          These guidelines exist to keep Blyth a safe, trustworthy place for
-          neighbors and helpers to do business with each other. They work
-          alongside our Terms of Service, and Blyth may remove listings,
-          content, or accounts that don&rsquo;t follow them.
-        </p>
-      </section>
-
-      <section className="policy-section">
-        <h2>Prohibited Listings</h2>
-        <ul>
-          <li>Illegal goods or services of any kind.</li>
-          <li>Counterfeit items or stolen property.</li>
-          <li>Weapons, firearms, ammunition, and explosives.</li>
-          <li>Alcohol, tobacco, vapes, and e-cigarettes.</li>
-          <li>
-            Prescription medications, controlled substances, and
-            recreational drugs.
-          </li>
-          <li>
-            Live animals, and any good or service involving animal cruelty.
-          </li>
-          <li>
-            Products that have been recalled by a manufacturer or government
-            agency.
-          </li>
-          <li>Adult content, or sexual services of any kind.</li>
-          <li>
-            Professional or licensed services you&rsquo;re not actually
-            licensed or qualified to provide (for example, medical, legal,
-            electrical, or plumbing work that requires a license in your
-            area).
-          </li>
-          <li>
-            Other hazardous materials, or items that are dangerous or
-            restricted under applicable law.
-          </li>
-          <li>
-            Anything that infringes another party&rsquo;s intellectual
-            property or other legal rights. See our{" "}
-            <Link href="/dmca">Copyright Policy</Link> for how to
-            report copyright infringement.
-          </li>
-        </ul>
-      </section>
-
-      <section className="policy-section">
-        <h2>Respectful Conduct</h2>
-        <ul>
-          <li>
-            Treat other neighbors and helpers with respect. Harassment,
-            threats, hate speech, and discriminatory behavior are not
-            tolerated.
-          </li>
-          <li>
-            Communicate honestly and keep order-related conversations on
-            Blyth so we can help if something goes wrong.
-          </li>
-        </ul>
-      </section>
-
-      <section className="policy-section">
-        <h2>Honest Listings &amp; Orders</h2>
-        <ul>
-          <li>
-            Describe items and services accurately, including condition,
-            availability, and price.
-          </li>
-          <li>
-            Fulfill orders you accept, and communicate promptly if something
-            changes.
-          </li>
-          <li>
-            Only share a confirmation code once you&rsquo;ve actually received
-            the item or service.
-          </li>
-        </ul>
-      </section>
-
-      <section className="policy-section">
-        <h2>Reporting a Problem</h2>
-        <p>
-          If you see a listing or message that violates these guidelines, or
-          have a problem with an order, please report it through the app or
-          contact support so our team can take a look.
-        </p>
-      </section>
-    </PolicyLayout>
-  );
-}
+const BUILT_IN_DATE = "Nov 10, 2026";
 
 export default async function CommunityGuidelinesPage() {
   const published = await fetchPublishedLegalDocument("guidelines", BUILT_IN_DATE);
-  if (!published) return <BuiltInCopy />;
+  const doc = published ?? { ...BUILT_IN_LEGAL.guidelines, updatedLabel: BUILT_IN_DATE };
   return (
-    <PolicyLayout title={published.title} updated={published.updatedLabel}>
-      {renderLegalDocument(published.body)}
+    <PolicyLayout title={doc.title} updated={doc.updatedLabel}>
+      {renderLegalDocument(doc.body)}
     </PolicyLayout>
   );
 }
