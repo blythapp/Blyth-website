@@ -11,13 +11,13 @@ import "./globals.css";
 
 const SITE_URL = "https://blythapp.com";
 const SITE_NAME = "Blyth";
-const SITE_TITLE = "Blyth Marketplace — Trusted Local Help Near You";
+const SITE_TITLE = "Blyth: Book Local Services and Buy From Neighbors";
 const SITE_DESCRIPTION =
-  "Blyth is a local services marketplace connecting neighbors across the US with trusted, verified help near you. Find local help, book services, hire vetted providers, and get things done — all from one app.";
+  "Book trusted, ID-verified local Helpers for haircuts, cleaning, dog walking and more, or buy from neighbors. Blyth is your neighborhood marketplace.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Blyth Marketplace",
+  title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   keywords: [
@@ -68,7 +68,8 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       logo: `${SITE_URL}/images/logo-full.png`,
       description: SITE_DESCRIPTION,
-      areaServed: "US",
+      areaServed: { "@type": "Country", name: "United States" },
+      foundingLocation: { "@type": "Place", name: "Maryland, United States" },
       sameAs: [
         "https://www.instagram.com/blythapp/",
         "https://x.com/blythapp_",
