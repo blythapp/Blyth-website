@@ -15,6 +15,11 @@ function trustedProxyHops(): number {
 
 export function getVisitorKey(request: NextRequest): string {
   if (process.env.TRUST_WEBSITE_PROXY === "true") {
+    const ipHeader = process.env.TRUST_WEBSITE_PROXY_HEADER?.trim().toLowerCase();
+    if (ipHeader) {
+      const direct = request.headers.get(ipHeader)?.trim();
+      if (direct) return direct;
+    }
     const forwardedFor = request.headers.get("x-forwarded-for");
     if (forwardedFor) {
       const hops = forwardedFor

@@ -6,3 +6,6 @@ node_modules
 .git
 .github
 *.log
+*.key
+*.pem
+CLAUDE.md
