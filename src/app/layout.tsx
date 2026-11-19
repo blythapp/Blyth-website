@@ -5,9 +5,11 @@ import "@fontsource/plus-jakarta-sans/500.css";
 import "@fontsource/plus-jakarta-sans/600.css";
 import "@fontsource/plus-jakarta-sans/700.css";
 import "@fontsource/plus-jakarta-sans/800.css";
+import "@fontsource/fraunces/latin-500.css";
 import SiteChrome from "@/components/SiteChrome";
 import { isComingSoon } from "@/lib/siteStatus";
 import "./globals.css";
+import "./site.css";
 
 const SITE_URL = "https://blythapp.com";
 const SITE_NAME = "Blyth";
@@ -99,7 +101,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const comingSoon = await isComingSoon();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           nonce={nonce}
@@ -110,6 +112,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
+              document.documentElement.classList.add('bl-js');
               if ('scrollRestoration' in history) {
                 history.scrollRestoration = 'manual';
               }

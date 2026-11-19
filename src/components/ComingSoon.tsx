@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import HelperWaitlistForm from "./HelperWaitlistForm";
+import ScrollEffects from "./site/ScrollEffects";
+import { delay } from "./site/delay";
 
 const FOOTER_LINKS = [
   { href: "/support", label: "Support" },
@@ -13,69 +15,77 @@ const FOOTER_LINKS = [
 
 export default function ComingSoon() {
   return (
-    <div className="cs-page">
-      <div className="cs-glow" aria-hidden="true" />
-      <div className="cs-glow-teal" aria-hidden="true" />
-      <div className="cs-dots" aria-hidden="true" />
-      <div className="cs-pins" aria-hidden="true">
-        <i className="cs-pin" />
-        <i className="cs-pin" />
-        <i className="cs-pin" />
-        <i className="cs-pin" />
-        <i className="cs-pin" />
+    <div className="bl bl-page bl-cs">
+      <ScrollEffects />
+      <div className="bl-wrap">
+        <header className="bl-cs-top">
+          <Image src="/images/logo-full-trim.png" alt="Blyth" width={690} height={240} priority draggable={false} />
+          <span>
+            Launching first in <b>Maryland</b>
+          </span>
+        </header>
+
+        <main className="bl-cs-hero">
+          <div>
+            <p className="bl-eyebrow bl-rv" style={delay(0.35)}>
+              Coming soon to iPhone and Android
+            </p>
+            <h1 className="bl-serif">
+              <span className="bl-hl">
+                <span>Local help and</span>
+              </span>
+              <span className="bl-hl" style={delay(0.12)}>
+                <span>goods, from</span>
+              </span>
+              <span className="bl-hl" style={delay(0.24)}>
+                <span>
+                  <em>people nearby.</em>
+                </span>
+              </span>
+            </h1>
+            <p className="bl-lede bl-rv" style={delay(0.43)}>
+              Book haircuts, cleaning, dog walks and more from verified Helpers in your neighborhood, or buy from
+              neighbors. Pay in the app and confirm every order with a code.
+            </p>
+            <div className="bl-rv" style={delay(0.51)}>
+              <HelperWaitlistForm />
+            </div>
+            <div className="bl-facts bl-rv" style={delay(0.59)}>
+              <div>
+                <b>ID-verified Helpers</b>
+                Every Helper verifies their identity.
+              </div>
+              <div>
+                <b>Secure payments</b>
+                Card payments handled by Stripe.
+              </div>
+              <div>
+                <b>Code-confirmed</b>
+                Share it only once it&rsquo;s done.
+              </div>
+            </div>
+          </div>
+          <div className="bl-pair">
+            <div className="bl-ph a bl-rv" style={delay(0.4)}>
+              <Image src="/images/site/home.jpg" alt="The Blyth home screen" width={720} height={1565} sizes="268px" priority />
+            </div>
+            <div className="bl-ph b bl-rv" style={delay(0.55)}>
+              <Image src="/images/site/book.jpg" alt="Booking a haircut in Blyth" width={720} height={1565} sizes="268px" />
+            </div>
+          </div>
+        </main>
+
+        <footer className="bl-cs-foot">
+          <nav>
+            {FOOTER_LINKS.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <div>&copy; {new Date().getFullYear()} Blyth. All rights reserved.</div>
+        </footer>
       </div>
-
-      <header className="cs-header">
-        <Image src="/images/logo-full-trim.png" alt="Blyth" width={690} height={240} priority draggable={false} />
-      </header>
-
-      <main className="cs-main">
-        <h1 className="cs-title">
-          <span className="cs-line">Coming</span>
-          <span className="cs-line cs-soon">Soon.</span>
-        </h1>
-        <p className="cs-sub">
-          Your <span className="cs-accent">Neighborhood</span> Marketplace.
-          <br />
-          Trusted, verified local Helpers and items nearby &mdash; <strong>almost here.</strong>
-        </p>
-        <p className="cs-region">
-          <span className="cs-region-dot" aria-hidden="true" />
-          Launching first in Maryland
-        </p>
-        <HelperWaitlistForm />
-        <div className="cs-stores">
-          <div className="cs-store">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.63 1.11 8.8.73 1.06 1.6 2.25 2.75 2.2 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.67-2.14.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.33-3.56zM14.17 6.13c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.7-.93 2.7.98.08 1.98-.5 2.59-1.24z" />
-            </svg>
-            <div>
-              <small>Coming soon to</small>
-              <span>App Store</span>
-            </div>
-          </div>
-          <div className="cs-store">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 3.2v17.6c0 .8.9 1.3 1.6.9l15-8.8c.7-.4.7-1.4 0-1.8l-15-8.8C5.9 1.9 5 2.4 5 3.2z" />
-            </svg>
-            <div>
-              <small>Coming soon to</small>
-              <span>Google Play</span>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <footer className="cs-footer">
-        <nav>
-          {FOOTER_LINKS.map((link) => (
-            <Link key={link.href} href={link.href}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <div>&copy; {new Date().getFullYear()} Blyth. All rights reserved.</div>
-      </footer>
     </div>
   );
 }

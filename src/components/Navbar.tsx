@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import { GetStartedLink, scrollToSection } from "./GetStartedLink";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/" },
+  { label: "How it works", href: "/#how" },
   { label: "Features", href: "/#features" },
+  { label: "What you can do", href: "/#services" },
+  { label: "FAQ", href: "/#faq" },
   { label: "Support", href: "/support" },
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
 ];
 
-const SECTION_IDS = ["features"] as const;
+const SECTION_IDS = ["how", "features", "services", "faq"] as const;
 type SectionId = (typeof SECTION_IDS)[number];
 
 function sectionOf(href: string): SectionId | null {
@@ -25,7 +25,6 @@ function sectionOf(href: string): SectionId | null {
 function isActive(pathname: string, href: string, activeSection: SectionId | null) {
   const section = sectionOf(href);
   if (section) return pathname === "/" && activeSection === section;
-  if (href === "/") return pathname === "/" && activeSection === null;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -37,6 +36,7 @@ export default function Navbar({ launched }: { launched: boolean }) {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState<SectionId | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const minimal = isShareCardPath(pathname);
   const navLinks = launched ? NAV_LINKS : NAV_LINKS.filter((link) => !sectionOf(link.href));
 
@@ -49,14 +49,16 @@ export default function Navbar({ launched }: { launched: boolean }) {
 
   const handleNavClick = (href: string) => {
     if (pathname !== "/") return;
-    if (href === "/") {
-      setActiveSection(null);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
     const section = sectionOf(href);
     if (section && scrollToSection(section)) setActiveSection(section);
   };
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (pathname !== "/" || !window.location.hash) return;
@@ -75,112 +77,73 @@ export default function Navbar({ launched }: { launched: boolean }) {
           if (entry.isIntersecting) visible.add(id);
           else visible.delete(id);
         }
-        const current = SECTION_IDS.find((id) => visible.has(id)) ?? null;
-        setActiveSection(current);
+        setActiveSection(SECTION_IDS.find((id) => visible.has(id)) ?? null);
       },
       { rootMargin: "-45% 0px -45% 0px" },
     );
-    const els = SECTION_IDS.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
-    els.forEach((el) => observer.observe(el));
+    SECTION_IDS.map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el)
+      .forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, [pathname]);
 
+  const solid = scrolled || pathname !== "/";
+
+  const renderLinks = (onPick?: () => void) =>
+    navLinks.map((link) => {
+      const active = isActive(pathname, link.href, activeSection);
+      return (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={active ? "active" : undefined}
+          aria-current={active ? "page" : undefined}
+          onClick={(e) => {
+            onPick?.();
+            if (pathname === "/" && sectionOf(link.href)) e.preventDefault();
+            handleNavClick(link.href);
+          }}
+        >
+          {link.label}
+        </Link>
+      );
+    });
+
   return (
-    <header className="navbar">
-      <div className="container navbar-inner">
-        <Link href="/" className="brand cursor-target">
-          <Image
-            src="/images/logo-full-trim.png"
-            alt="Blyth"
-            width={690}
-            height={240}
-            priority
-            draggable={false}
-            className="brand-logo-full"
-          />
+    <header className={`bl bl-nav${solid ? " solid" : ""}${menuOpen ? " open" : ""}`}>
+      <div className="bl-wrap bl-nav-in">
+        <Link
+          href="/"
+          className="bl-logo"
+          onClick={(e) => {
+            if (pathname !== "/") return;
+            e.preventDefault();
+            setActiveSection(null);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          <Image src="/images/logo-full-trim.png" alt="Blyth" width={690} height={240} priority draggable={false} />
         </Link>
 
-        {!minimal && (
-          <nav className="nav-links">
-            {navLinks.map((link) => {
-              const active = isActive(pathname, link.href, activeSection);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`cursor-target${active ? " active" : ""}`}
-                  aria-current={active ? "page" : undefined}
-                  onClick={(e) => {
-                    if (pathname === "/" && (link.href === "/" || sectionOf(link.href))) e.preventDefault();
-                    handleNavClick(link.href);
-                  }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
-        )}
+        {!minimal && <nav className="bl-nav-links">{renderLinks()}</nav>}
 
         {!minimal && (
-          <div className="navbar-actions">
-            {launched && <GetStartedLink className="btn btn-accent cursor-target">Get Started</GetStartedLink>}
+          <div className="bl-nav-end">
+            {launched && <GetStartedLink className="bl-btn">Get the app</GetStartedLink>}
             <button
-              className="nav-menu-btn cursor-target"
+              type="button"
+              className="bl-burger"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
-              type="button"
               onClick={() => setMenuOpen((open) => !open)}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                {menuOpen ? (
-                  <path
-                    d="M6 6l12 12M18 6L6 18"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                ) : (
-                  <path
-                    d="M4 6h16M4 12h16M4 18h16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                )}
-              </svg>
+              <i />
+              <i />
             </button>
           </div>
         )}
-
-        {!minimal && menuOpen ? (
-          <nav className="nav-mobile-menu">
-            {navLinks.map((link) => {
-              const active = isActive(pathname, link.href, activeSection);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`cursor-target${active ? " active" : ""}`}
-                  aria-current={active ? "page" : undefined}
-                  onClick={(e) => {
-                    setMenuOpen(false);
-                    if (pathname === "/" && (link.href === "/" || sectionOf(link.href))) e.preventDefault();
-                    handleNavClick(link.href);
-                  }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            {launched && (
-              <GetStartedLink className="btn btn-accent nav-mobile-cta cursor-target" onNavigate={() => setMenuOpen(false)}>
-                Get Started
-              </GetStartedLink>
-            )}
-          </nav>
-        ) : null}
       </div>
+      {!minimal && <nav className="bl-mmenu" inert={!menuOpen}>{renderLinks(() => setMenuOpen(false))}</nav>}
     </header>
   );
 }

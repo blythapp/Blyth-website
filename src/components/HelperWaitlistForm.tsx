@@ -55,8 +55,8 @@ export default function HelperWaitlistForm() {
 
   return (
     <form className="wl-card" onSubmit={onSubmit} noValidate>
-      <h2 className="wl-title">Become a Helper</h2>
-      <p className="wl-sub">Be one of the first Helpers on Blyth. We&rsquo;ll email you when we launch.</p>
+      <h2 className="wl-title">Want to offer your skills on Blyth?</h2>
+      <p className="wl-sub">Join the Helper waitlist and we&rsquo;ll email you the day we launch.</p>
 
       <div className="wl-row">
         <div className="wl-field">
