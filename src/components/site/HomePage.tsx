@@ -2,6 +2,7 @@ import Image from "next/image";
 import ScrollEffects from "./ScrollEffects";
 import StepsScrolly from "./StepsScrolly";
 import FaqList from "./FaqList";
+import TypedHeadline from "./TypedHeadline";
 import StoreLinks from "./StoreLinks";
 import { delay } from "./delay";
 
@@ -13,14 +14,14 @@ const PROOF = [
 
 const HELPER_STEPS = [
   { title: "Verify and list", body: "Confirm your ID, link your bank, and post your services or items." },
-  { title: "Accept orders", body: "Set your hours and accept the requests that work for you." },
-  { title: "Get paid", body: "Enter the buyer’s code when you’re done and withdraw your earnings." },
+  { title: "Accept orders", body: "Accept bookings for your services and items, on the hours you set." },
+  { title: "Get paid", body: "Enter the buyer’s code once the job is done or the item is handed over, then withdraw your earnings." },
 ];
 
 const FEATURES_LEFT = [
   { title: "Discover nearby", body: "See services and items from Helpers close to you, with distance, price and reviews." },
   { title: "Book a time that works", body: "Pick a day and time from the Helper’s real availability." },
-  { title: "Message Helpers", body: "Ask questions and sort out details before and after you book." },
+  { title: "Message your Helper", body: "Chat in the app once your order is accepted." },
 ];
 
 const FEATURES_RIGHT = [
@@ -42,7 +43,7 @@ const TILES = [
 
 const CONTROL = [
   { title: "Your money waits", body: "Helpers are paid only after you share your code." },
-  { title: "Talk before you book", body: "Message any Helper to ask questions or arrange the details." },
+  { title: "Chat once it\u2019s accepted", body: "Message your Helper in the app to sort out the details and agree on delivery or pickup." },
   { title: "Ratings from real orders", body: "Reviews come only from completed orders." },
   { title: "Help when you need it", body: "Report a problem from the order, or chat with support." },
 ];
@@ -64,21 +65,7 @@ export default function HomePage({ qrSvg }: { qrSvg: string }) {
         <div className="bl-wrap">
           <div className="bl-hero">
             <div>
-              <h1 className="bl-h1 bl-serif">
-                <span className="bl-hl">
-                  <span>Book local help.</span>
-                </span>
-                <span className="bl-hl" style={delay(0.12)}>
-                  <span>
-                    <em>Buy from</em>
-                  </span>
-                </span>
-                <span className="bl-hl" style={delay(0.24)}>
-                  <span>
-                    <em>neighbors.</em>
-                  </span>
-                </span>
-              </h1>
+              <TypedHeadline />
               <p className="bl-lede bl-rv" style={delay(0.35)}>
                 Blyth connects you with verified Helpers nearby for haircuts, cleaning, dog walks and errands, and with
                 neighbors selling things you need. Pay in the app, and confirm every order with a code when it&rsquo;s
@@ -87,11 +74,6 @@ export default function HomePage({ qrSvg }: { qrSvg: string }) {
               <div className="bl-ctas bl-rv" style={delay(0.43)}>
                 <StoreLinks />
               </div>
-              <p className="bl-area bl-rv" style={delay(0.51)}>
-                <span>Payments by Stripe</span>
-                <span>ID-verified Helpers</span>
-                <span>Starting in Maryland</span>
-              </p>
             </div>
             <div className="bl-par">
               <div className="bl-rv" style={delay(0.59)}>
@@ -177,7 +159,7 @@ export default function HomePage({ qrSvg }: { qrSvg: string }) {
                 <h2 className="bl-h2 bl-serif bl-rv">What you can do on Blyth</h2>
                 <p className="bl-intro bl-rv">Services from people in your area, plus things neighbors are selling.</p>
               </div>
-              <p className="bl-aside bl-rv">Prices are set by each Helper, and you always see the total before you pay.</p>
+              <p className="bl-aside bl-rv">Not sure what you need yet? Scroll the Discover feed for recent work from Helpers near you, and save the posts you like.</p>
             </div>
             <div className="bl-tiles">
               {TILES.map((t, i) => (
@@ -299,8 +281,6 @@ export default function HomePage({ qrSvg }: { qrSvg: string }) {
                   dangerouslySetInnerHTML={{ __html: qrSvg }}
                 />
                 <span>
-                  On a computer?
-                  <br />
                   Scan to get Blyth
                   <br />
                   on your phone.

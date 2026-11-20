@@ -272,6 +272,42 @@ a.bl-store:hover {
   margin: 0;
 }
 
+.bl-typed {
+  font-size: clamp(46px, 4.6vw, 66px);
+  line-height: 1.04;
+}
+
+.bl-ch.off {
+  visibility: hidden;
+}
+
+html.bl-js .bl-typed:not(.is-live) .bl-ch {
+  visibility: hidden;
+}
+
+.bl-caret {
+  position: relative;
+  animation: bl-blink 1s steps(1) infinite;
+}
+
+.bl-caret::after {
+  content: "";
+  position: absolute;
+  left: 0.04em;
+  bottom: 0.02em;
+  width: 0.07em;
+  height: 0.8em;
+  background: var(--accent);
+}
+
+.bl-caret.is-typing {
+  animation: none;
+}
+
+@keyframes bl-blink {
+  50% { opacity: 0; }
+}
+
 .bl-h1 em,
 .bl-h2 em {
   font-style: normal;
@@ -1460,6 +1496,10 @@ html.bl-js .bl-code.is-in .bl-ok {
     font-size: 46px;
   }
 
+  .bl-typed {
+    font-size: 40px;
+  }
+
   .bl-cs h1 {
     font-size: 44px;
   }
@@ -1675,6 +1715,10 @@ html.bl-js .bl-code.is-in .bl-ok {
 @media (prefers-reduced-motion: reduce) {
   html.bl-js .bl-hl > span {
     animation: none !important;
+  }
+
+  .bl-caret {
+    animation: none;
   }
 
   html.bl-js .bl-rv,

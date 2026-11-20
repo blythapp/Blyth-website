@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 const STEPS = [
   {
     title: "Find it nearby",
-    body: "Browse services and items from Helpers around you, see their work, and message them with questions.",
+    body: "Browse services and items from Helpers around you, and see their work, prices and reviews.",
     src: "/images/site/discover.jpg",
     alt: "Finding Helpers nearby in Blyth",
   },
@@ -18,7 +18,7 @@ const STEPS = [
   },
   {
     title: "Share your code when it’s done",
-    body: "Welcome your Helper or pick up your item. Only then share your 4-digit code, and the order is complete.",
+    body: "Welcome your Helper, or get your item the way you agreed with them. Only then share your 4-digit code, and the order is complete.",
     src: "/images/site/order.jpg",
     alt: "An order with its confirmation code",
   },

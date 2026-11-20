@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import FooterVerse from "./site/FooterVerse";
 
 const LINKS = [
   { label: "Support", href: "/support" },
@@ -56,7 +57,7 @@ export default function Footer() {
         </div>
         <div className="bl-foot-bot">
           <span>&copy; 2026 Blyth. All rights reserved.</span>
-          <span>Maryland</span>
+          <FooterVerse />
         </div>
       </div>
     </footer>
