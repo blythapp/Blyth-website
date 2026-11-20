@@ -119,7 +119,8 @@ export default function Navbar({ launched }: { launched: boolean }) {
             if (pathname !== "/") return;
             e.preventDefault();
             setActiveSection(null);
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            if (window.location.hash) window.history.replaceState(null, "", "/");
+            window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
           }}
         >
           <Image src="/images/logo-full-trim.png" alt="Blyth" width={690} height={240} priority draggable={false} />

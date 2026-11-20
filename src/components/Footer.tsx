@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import FooterVerse from "./site/FooterVerse";
+import TopLink from "./site/TopLink";
 
 const LINKS = [
   { label: "Support", href: "/support" },
@@ -17,9 +18,9 @@ export default function Footer() {
       <div className="bl-wrap bl-foot-in">
         <div className="bl-foot-top">
           <div>
-            <Link href="/" className="bl-logo">
+            <TopLink className="bl-logo">
               <Image src="/images/logo-full-trim.png" alt="Blyth" width={690} height={240} draggable={false} />
-            </Link>
+            </TopLink>
             <p className="bl-foot-desc">Book trusted local Helpers and buy from neighbors near you.</p>
             <nav aria-label="Footer">
               {LINKS.map((link) => (

@@ -9,7 +9,7 @@ export function scrollToSection(id: string): boolean {
   const el = document.getElementById(id);
   if (!el) return false;
   el.scrollIntoView({ behavior: "smooth", block: "start" });
-  if (window.location.hash !== `#${id}`) window.history.replaceState(null, "", `/#${id}`);
+  if (window.location.hash) window.history.replaceState(null, "", window.location.pathname + window.location.search);
   return true;
 }
 
