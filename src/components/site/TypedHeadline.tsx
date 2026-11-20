@@ -18,14 +18,12 @@ export default function TypedHeadline() {
   const [typing, setTyping] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setLive(true);
-      return;
-    }
     let n = 0;
     let timer: ReturnType<typeof setTimeout>;
-    setCount(0);
-    setLive(true);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      timer = setTimeout(() => setLive(true), 0);
+      return () => clearTimeout(timer);
+    }
     const step = () => {
       n += 1;
       setCount(n);
@@ -39,9 +37,13 @@ export default function TypedHeadline() {
       timer = setTimeout(step, wait);
     };
     timer = setTimeout(() => {
-      setTyping(true);
-      step();
-    }, 300);
+      setCount(0);
+      setLive(true);
+      timer = setTimeout(() => {
+        setTyping(true);
+        step();
+      }, 300);
+    }, 0);
     return () => clearTimeout(timer);
   }, []);
 
